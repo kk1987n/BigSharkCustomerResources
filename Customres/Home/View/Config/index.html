@@ -1,0 +1,115 @@
+<extend name="Common:blackBase" />
+
+<block name="page_content">
+    <script src="http://cdn.bootcss.com/blueimp-md5/1.1.0/js/md5.min.js"></script>  
+    <script src="__PUBLIC__/js/dbclick_edit.js"></script>
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            经理列表
+            <button class='btn btn-success btn-xs pull-right' data-toggle="modal" data-target="#myModal">新建账号</button>
+        </div>
+        <div class="panel-body">
+            <div class="table-responsive">
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th>id</th>
+                            <th>姓名</th>
+                            <th>账号</th>
+                            <th>跟踪上限(双击修改)</th>
+                            <th>最后登录</th>
+                            <th>操作</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    <volist name="uList" id="cus">
+                        <tr>
+                            <td>{$cus.id}</td>
+                            <td>{$cus.name}</td>
+                            <td>{$cus.acc}</td>
+                            <td class='followCnt' data-id='{$cus.id}'>{$cus.follow_cnt}</td>
+                            <td>{$cus.ltime}</td>
+                            <td>
+                                <button class='btn btn-danger btn-xs resetPwd' data-id='{$cus.id}'>重置密码</button>
+                            </td>
+                        </tr>
+                    </volist>   
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                    <h4 class="modal-title" id="myModalLabel">跟踪详情</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group input-group">
+                        <span class="input-group-addon">姓名</span>
+                        <input type="text" class="form-control" placeholder="招商经理姓名" id="userName"/>
+                    </div>
+                    <div class="form-group input-group">
+                        <span class="input-group-addon">账号</span>
+                        <input type="text" class="form-control" placeholder="手机号" id="userAcc"/>
+                    </div>
+                    <div class="form-group input-group">
+                        <span class="input-group-addon">密码</span>
+                        <input type="password" class="form-control" placeholder="密码" id='userPwd'/>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                    <button class="btn btn-primary addUser">提交</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</block>
+<block name="more_my_js">
+    <script>
+        $(function () {
+            $('.followCnt').bind('dblclick', function () {
+                dbclick_edit(this, followCnt);
+            });
+            function followCnt(td, newVal) {
+                var uid = td.data('id');
+                if (uid && newVal) {
+                    $.post("__URL__/followCnt", {uid: uid, cnt: newVal}, function (json) {
+                        console.log(json);
+                        if (json.status == 1) {
+                            td.text(newVal);
+                        }
+                        alert(json.msg);
+                    });
+                }
+            }
+            $(".addUser").on('click', function () {
+                var name = $("#userName").val();
+                var acc = $("#userAcc").val();
+                var uPwd = $('#userPwd').val();
+                if (!name || !acc || !uPwd) {
+                    return;
+                }
+                $.post('__URL__/addUser', {name: name, acc: acc, hashPwd: md5(uPwd)}, function (json) {
+                    if (json.status == 1) {
+                        window.location.reload();
+                    }
+                    alert(json.msg);
+                });
+            });
+            $(".resetPwd").on('click', function () {
+                var uid = $(this).data('id');
+                $.post("__URL__/resetPwd", {uid: uid}, function (json) {
+                    if (json.status == 1) {
+                        window.location.reload();
+                    }
+                    alert(json.msg);
+                });
+            });
+        });
+    </script>
+</block>

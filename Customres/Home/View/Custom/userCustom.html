@@ -1,0 +1,81 @@
+<extend name="Common:blackBase" />
+
+<block name="page_content">
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            我的客户
+        </div>
+        <div class="panel-body">
+            <div class="form-group input-group">
+                <span class="input-group-addon">筛选</span>
+                <select class="form-control" onchange="window.location = this.value;">
+                    <option value='{:U("Home/Custom/userCustom")}' <if condition="$Think.get.status eq ''">selected</if>>全部</option>
+                    <volist name='followStatus' id='status'>
+                        <option value='{:U("Home/Custom/userCustom",array("status"=>$status["id"]))}' <if condition="$Think.get.status eq $status[id]">selected</if>>{$status.name}</option>
+                    </volist>
+                </select>
+            </div>
+            <div class="table-responsive">
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th>id</th>
+                            <th>姓名</th>
+                            <th>电话</th>
+                            <th>座机</th>
+                            <th>公司</th>
+                            <th>地址</th>
+                            <th>操作</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    <volist name="userCustom" id="cus">
+                        <tr>
+                            <td>{$cus.id}</td>
+                            <td>{$cus.name}</td>
+                            <td><a href='tel:{$cus.phone}'>{$cus.phone}</a></td>
+                            <td>{$cus.zuoji}</td>
+                            <td>{$cus.company}</td>
+                            <td>{$cus.address}</td>
+                            <td>
+                                <button class="btn btn-info btn-xs addFollow" data-toggle="modal" data-target="#addFollow" data-cid="{$cus['id']}">新建跟踪</button>
+                                <button class="btn btn-success btn-xs customFollowInfo" data-toggle="modal" data-target="#myModal" data-href="{:U('Home/Custom/customFollowInfo',array('cid'=>$cus['id']))}">跟踪详情</button>
+                                <button class="btn btn-success btn-xs customFollowInfo" data-toggle="modal" data-target="#myModal" data-href="{:U('Home/Custom/customInfo',array('cid'=>$cus['id']))}">客户详情</button>
+                                <button class="btn btn-danger btn-xs dropCustomFollow" data-cid="{$cus['id']}">放弃跟踪</button>
+                            </td>
+                        </tr>
+                    </volist>   
+                    </tbody>
+                </table>
+            </div>
+            <!-- /.table-responsive -->
+        </div>
+        <!-- /.panel-body -->
+    </div>
+    <div class="digg">{$show}</div>
+    <include file='Custom/follow/followInfo'/>
+    <include file='Custom/follow/addFollow'/>
+</block>
+<block name="more_my_js">
+    <script>
+        $(function () {
+            $('.addFollow').on('click', function () {
+                $('#cid').val($(this).data('cid'));
+            });
+            $('.customFollowInfo').on('click', function () {
+                $('#customFollowInfo').attr('src', $(this).data('href'));
+            });
+            $('.dropCustomFollow').on('click', function () {
+                var cid = $(this).data('cid');
+                if (!cid || !confirm('确定放弃跟踪')) {
+                    return;
+                }
+                $.post("__URL__/dropCustomFollow", {cid: cid}, function (json) {
+                    if (json.status == 1) {
+                        window.location.reload();
+                    }
+                });
+            });
+        });
+    </script>
+</block>

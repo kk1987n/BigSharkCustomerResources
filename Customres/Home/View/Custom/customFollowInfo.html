@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<!-- saved from url=(0034)http://blueuprising.com/login.html -->
+<html style="height: 100%">
+    <head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>客户跟踪信息</title>
+        <!-- Bootstrap Core CSS -->
+        <link href="__PUBLIC__/sb/bower_components/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+        <!-- MetisMenu CSS -->
+        <link href="__PUBLIC__/sb/bower_components/metisMenu/dist/metisMenu.min.css" rel="stylesheet">
+        <!-- Custom CSS -->
+        <link href="__PUBLIC__/sb/dist/css/sb-admin-2.css" rel="stylesheet">
+        <link href="__PUBLIC__/sb/dist/css/timeline.css" rel="stylesheet">
+        <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+        <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+        <!--[if lt IE 9]>
+            <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+            <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+        <![endif]-->
+        <!-- jQuery -->
+        <script src="__PUBLIC__/sb/bower_components/jquery/dist/jquery.min.js"></script>
+        <script src="http://cdn.bootcss.com/blueimp-md5/1.1.0/js/md5.min.js"></script>  
+        <!--<script src="http://cdn.bootcss.com/blueimp-md5/1.1.0/js/md5.js"></script>--> 
+        <link href="__PUBLIC__/sb/bower_components/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+    </head>
+    <body>
+        <!--<a class="pull-right" style="color:#fff;padding:15px;" href="/">返回首页</a>-->
+        <div class="container">
+            <ul class="timeline">
+                <volist name='follows' id='follow'>
+                    <li <eq name='mod' value='0'>class="timeline-inverted"</eq>>
+                        <div class="timeline-badge {$follow['status']==999?'success':'info'}"><i class="fa {$follow['status']==999?'fa-check':'fa-angle-double-up'}"></i></div>
+                        <div class="timeline-panel">
+                            <div class="timeline-heading">
+                                <h4 class="timeline-title">{$follow.uname}({$follow.statusname})</h4>
+                                <p><small class="text-muted"><i class="fa fa-clock-o"></i>{$follow.utime}</small>
+                                </p>
+                            </div>
+                            <div class="timeline-body">
+                                <p>{$follow.content}</p>
+                            </div>
+                        </div>
+                    </li>
+                </volist>
+                <li <eq name='mod' value='1'>class="timeline-inverted"</eq>>
+                    <div class="timeline-badge success"><i class="fa fa-plus"></i></div>
+                    <div class="timeline-panel">
+                        <div class="timeline-heading">
+                            <h4 class="timeline-title">{$custom.adder}</h4>
+                            <p><small class="text-muted"><i class="fa fa-clock-o"></i>{$custom.atime}</small>
+                            </p>
+                        </div>
+                        <div class="timeline-body">
+                            <p>创建客户</p>
+                        </div>
+                    </div>
+                </li>
+            </ul>
+        </div>
+        <script type="text/javascript">
+        </script>
+    </body>
+</html>

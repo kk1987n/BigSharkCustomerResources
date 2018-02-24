@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<!-- saved from url=(0034)http://blueuprising.com/login.html -->
+<html style="height: 100%">
+    <head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>大鲨鱼客户资源管理系统</title>
+        <!-- Bootstrap Core CSS -->
+        <link href="__PUBLIC__/sb/bower_components/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+        <!-- MetisMenu CSS -->
+        <link href="__PUBLIC__/sb/bower_components/metisMenu/dist/metisMenu.min.css" rel="stylesheet">
+        <!-- Custom CSS -->
+        <link href="__PUBLIC__/sb/dist/css/sb-admin-2.css" rel="stylesheet">
+        <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+        <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+        <!--[if lt IE 9]>
+            <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+            <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+        <![endif]-->
+        <!-- jQuery -->
+        <script src="__PUBLIC__/sb/bower_components/jquery/dist/jquery.min.js"></script>
+        <script src="http://cdn.bootcss.com/blueimp-md5/1.1.0/js/md5.min.js"></script>  
+        <!--<script src="http://cdn.bootcss.com/blueimp-md5/1.1.0/js/md5.js"></script>--> 
+    </head>
+    <body style="height: 100%;background-color: #08222E;">
+        <!--<a class="pull-right" style="color:#fff;padding:15px;" href="/">返回首页</a>-->
+        <div class="container">
+            <div class="row">
+                <div class="col-md-4 col-md-offset-4">
+                    <div class="login-panel panel panel-default">
+                        <div class="panel-heading">
+                            <h3 class="panel-title">登录</h3>
+                        </div>
+                        <div class="panel-body">
+                            <div class="form-group">
+                                <input class="form-control" placeholder="帐号" id="account" type="text" autofocus="">
+                            </div>
+                            <div class="form-group">
+                                <input class="form-control" placeholder="密码" id="password" type="password" value="">
+                            </div>
+                            <div class="col-md-12">
+                                <p id="help" style="color:red;"></p>
+                            </div>
+                            <input id="token" type="hidden" value="{$token}">
+                            <input id="time" type="hidden" value="{$time}">
+                            <button class="btn btn-lg btn-success btn-block" onclick="sbm()">登录</button>
+                        </div>
+                    </div> 
+                </div>
+            </div>
+        </div>
+        <script type="text/javascript">
+            function sbm() {
+                var account = $("#account").val();
+                var password = $("#password").val();
+                var token = $("#token").val();
+                var time = $("#time").val();
+                if (!account) {
+                    help('请输入正确的帐号');
+                    return;
+                }
+                if (!password) {
+                    help('请输入密码');
+                    return;
+                }
+                $.post("{:U('Home/Login/doLogin')}", {username: account, pwdHash: md5(password), token: token, time: time}, function (json) {
+                    if (json.status == 1) {
+                        window.location.reload();
+                    } else {
+                        $("#imgVerify").attr('src', '__URL__/verify?' + Math.random());
+                        help(json.msg);
+                    }
+                });
+            }
+            function help(str) {
+                $("#help").text(str);
+            }
+        </script>
+    </body>
+</html>

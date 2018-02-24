@@ -1,0 +1,51 @@
+
+<div class="modal fade" id="addFollow" tabindex="-1" role="dialog" aria-labelledby="myAddFollow" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                <h4 class="modal-title" id="myModalLabel">新建跟踪</h4>
+            </div>
+            <div class="modal-body">
+                <input id='cid' value='0' type='hidden'>
+                <div class="form-group">
+                    <label>客户状态</label>
+                    <volist name='followStatus' id='status'>
+                        <label class='radio-inline'><input type="radio" name="followStatus" value="{$status.id}">{$status.name}</label>
+                    </volist>
+                </div>
+                <div class="form-group">
+                    <label>描述</label>
+                    <textarea class="form-control" rows="5" placeholder="详细记录本次跟踪详情" id='followContent'></textarea>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                <button type="button" class="btn btn-primary" id='saveFollow'>保存</button>
+            </div>
+        </div>
+        <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+</div>
+<script>
+    $(function () {
+        $('#saveFollow').on('click', function () {
+            var cid = $("#cid").val();
+            var status = $('input[name="followStatus"]:checked').val();
+            var content = $("#followContent").val();
+            if (!cid || !content) {
+                alert('信息不全面,刷新后重试');
+                return;
+            }
+            $.post("__URL__/addFollow", {cid: cid, status: (status == "undefined" ? 0 : status), content: content}, function (json) {
+                console.log(json)
+                if (json.status == 1) {
+                    window.location.reload();
+                }
+                alert(json.msg);
+                $('#addFollow').modal('hide');
+            });
+        });
+    });
+</script>

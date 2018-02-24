@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+    <include file="Common:header" />
+    <body>
+        <div id="wrapper">
+            <!-- Navigation -->
+            <nav class="navbar navbar-default navbar-static-top" role="navigation" style="margin-bottom: 0">
+                <include file="Common:navbar" />
+                <include file="Common:left" />
+            </nav>
+
+            <!-- Page Content -->
+            <div id="page-wrapper" style="padding:0px;">
+                <div class="container-fluid">
+                    <h1 class="page-header">{$one_tool_memu.name}<small>（{$one_tool_memu.des}）</small></h1>
+                    <div class="panel panel-primary">
+                        <block name="page_content"></block>
+                        <block name="page_footer">
+                            <div class="panel-footer"> 
+                                <div class="row"> 
+                                </div>
+                            </div>
+                        </block>
+                    </div>
+                </div>
+            </div>
+            <br />
+            <br />
+            <block name="more_my_js"></block>
+    </body>
+</html>

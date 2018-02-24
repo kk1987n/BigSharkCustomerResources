@@ -1,0 +1,185 @@
+<extend name="Common:blackBase" />
+
+<block name="page_content">
+    <div class='row'>
+        <div class='col-lg-6'>
+            <div class="panel panel-default">
+                <div class="panel-heading">签单月榜</div>
+                <div class="panel-body">
+                    <div class="table-responsive">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>名称</th>
+                                    <th>签单量</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                            <volist name='mouthSignRank' id='sign'>
+                                <tr>
+                                    <td>{$sign.name|default='未知'}</td>
+                                    <td>{$sign.cnt}</td>
+                                </tr>
+                            </volist>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class='col-lg-6'>
+            <div class="panel panel-default">
+                <div class="panel-heading">追踪月榜</div>
+                <div class="panel-body">
+                    <div class="table-responsive">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>名称</th>
+                                    <th>追踪次数</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                            <volist name='mouthFollowRand' id='sign'>
+                                <tr>
+                                    <td>{$sign.name|default='未知'}</td>
+                                    <td>{$sign.cnt}</td>
+                                </tr>
+                            </volist>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class='col-lg-6'>
+            <div class="panel panel-default">
+                <div class="panel-heading">签单总榜</div>
+                <div class="panel-body">
+                    <div class="table-responsive">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>名称</th>
+                                    <th>签单量</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                            <volist name='signRank' id='sign'>
+                                <tr>
+                                    <td>{$sign.name|default='未知'}</td>
+                                    <td>{$sign.cnt}</td>
+                                </tr>
+                            </volist>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class='col-lg-6'>
+            <div class="panel panel-default">
+                <div class="panel-heading">追踪总榜</div>
+                <div class="panel-body">
+                    <div class="table-responsive">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>名称</th>
+                                    <th>追踪次数</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                            <volist name='followRank' id='flw'>
+                                <tr>
+                                    <td>{$flw.name|default='未知'}</td>
+                                    <td>{$flw.cnt}</td>
+                                </tr>
+                            </volist>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                    <h4 class="modal-title" id="myModalLabel">本月大鲨鱼</h4>
+                </div>
+                <div class="modal-body">
+                    <div class='row'>
+                        <div class='col-lg-6'><img src='__PUBLIC__/images/shark.png' style='width:100%;'/></div>
+                        <div class='col-lg-6'>
+                            <p>
+                                <span style='color:#aaa;font-size:28px;'>大鲨鱼&nbsp;&nbsp;</span>
+                                <span style='color:red;font-size:75px;'>{$bigShark.name|default='暂无'}</span>
+                            </p>
+                            <p>
+                                <span style='color:#aaa;font-size:28px;'>签单量&nbsp;&nbsp;</span>
+                                <span style='color:red;font-size:75px;'>{$bigShark.cnt|default='0'}</span>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                </div>
+            </div>
+            <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+    </div>
+</block>
+<block name="more_my_js">
+    <script>
+        $(function () {
+            $('.previewPano').on('click', function () {
+                $("#previewPano").attr('src', "{:U('Home/Pano/previewPano')}?id=" + $(this).data('id'));
+                $("#previewPanoNewWindow").attr('href', "{:U('Home/Pano/previewPano')}?id=" + $(this).data('id'));
+            });
+            $("#myModal").modal("show")
+        });
+        function refer_status(id) {
+            var appid = $("#appid").val();
+            var sign = $("#sign").val();
+            var time = $("#time").val();
+            $.ajax({
+                type: "POST",
+                url: "{:U('Home/Business/referStatus')}",
+                data: {id: id, appid: appid, sign: sign, time: time},
+                dataType: 'json',
+                success: function (result) {
+                    console.log(result);
+                    if (result.status == '1') {
+                        location.reload();
+                    } else {
+                        alert(result.msg);
+                    }
+                }
+            })
+        }
+        function del_pano(id) {
+            var appid = $("#appid").val();
+            var sign = $("#sign").val();
+            var time = $("#time").val();
+            $.ajax({
+                type: "POST",
+                url: "{:U('Home/Business/panoDel')}",
+                data: {id: id, appid: appid, sign: sign, time: time},
+                dataType: 'json',
+                success: function (result) {
+                    console.log(result);
+                    if (result.status == '1') {
+                        location.reload();
+                    } else {
+                        alert(result.msg);
+                    }
+                }
+            });
+        }
+    </script>
+</block>

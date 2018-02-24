@@ -1,0 +1,80 @@
+<extend name="Common:blackBase" />
+
+<block name="page_content">
+
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            公共资源池
+        </div>
+        <div class="panel-body">
+            <div class="table-responsive">
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th>id</th>
+                            <th>姓名</th>
+                            <th>公司</th>
+                            <th>地址</th>
+                            <th>操作</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    <volist name="customs" id="cus">
+                        <tr>
+                            <td>{$cus.id}</td>
+                            <td>{$cus.name}</td>
+                            <td>{$cus.company}</td>
+                            <td>{$cus.address}</td>
+                            <td>
+                                <button class="btn btn-success btn-xs customFollowInfo" data-toggle="modal" data-target="#myModal" data-href="{:U('Home/Custom/customFollowInfo',array('cid'=>$cus['id']))}">跟踪详情</button>
+                                <button class="btn btn-success btn-xs followCustom" data-cid="{$cus.id}">开始跟踪</button>
+                                <!--<button class="btn btn-default btn-xs previewPano" data-toggle="modal" data-target="#myModal" data-id="{$vo.id}">预览</button>-->
+                            </td>
+                        </tr>
+                    </volist>   
+                    </tbody>
+                </table>
+            </div>
+            <!-- /.table-responsive -->
+        </div>
+        <!-- /.panel-body -->
+    </div>
+    <div class="digg">{$show}</div>
+
+
+    <include file='Custom/follow/followInfo'/>
+</block>
+<block name="more_my_js">
+    <script>
+        $(function () {
+            $('.customFollowInfo').on('click', function () {
+                $('#customFollowInfo').attr('src', $(this).data('href'));
+            });
+            var followIng = 0;
+            $('.followCustom').on('click', function () {
+                if (!confirm('确定')) {
+                    return;
+                }
+                if (followIng) {
+                    alert('生成中...');
+                    return;
+                }
+                followIng = 1;
+                var cid = $(this).data('cid');
+                $.ajax({
+                    type: "POST",
+                    url: "__URL__/followCustom",
+                    data: {cid: cid},
+                    dataType: 'json',
+                    success: function (result) {
+                        alert(result.msg);
+                        if (result.status == '1') {
+                            location.reload();
+                        }
+                        followIng = 0;
+                    },
+                })
+            });
+        });
+    </script>
+</block>

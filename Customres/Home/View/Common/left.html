@@ -1,0 +1,63 @@
+<div class="navbar-default sidebar" role="navigation">
+    <div class="sidebar-nav navbar-collapse">
+        <ul class="nav" id="side-menu">
+            <li>
+                <a  href="/">
+                    <i class="fa fa-home fa-fw "></i>
+                    <span class="menu-text">大鲨鱼</span>
+                </a>
+            </li>
+            <li>
+                <a  href="{:U('Home/Custom/pool')}">
+                    <i class="fa fa-home fa-fw "></i>
+                    <span class="menu-text">公共资源池</span>
+                </a>
+            </li>
+            <li>
+                <a  href="{:U('Home/Custom/userCustom')}">
+                    <i class="fa fa-home fa-fw "></i>
+                    <span class="menu-text">我的客户</span>
+                </a>
+            </li>
+            <li>
+                <a  href="{:U('Home/Custom/addCustom')}">
+                    <i class="fa fa-home fa-fw "></i>
+                    <span class="menu-text">录入客户</span>
+                </a>
+            </li>
+            <li>
+                <a  href="{:U('Home/Custom/successList')}">
+                    <i class="fa fa-home fa-fw "></i>
+                    <span class="menu-text">成功签订</span>
+                </a>
+            </li>
+            <if condition='$Think.session.uid lt 10'>
+                <li>
+                    <a  href="{:U('Home/Config/index')}">
+                        <i class="fa fa-home fa-fw "></i>
+                        <span class="menu-text">招商经理</span>
+                    </a>
+                </li>
+                <li>
+                    <a  href="{:U('Home/Config/config')}">
+                        <i class="fa fa-home fa-fw "></i>
+                        <span class="menu-text">系统配置</span>
+                    </a>
+                </li>
+            </if>
+            <li>
+                <a  href="{:U('Home/Config/editPwd')}">
+                    <i class="fa fa-home fa-fw "></i>
+                    <span class="menu-text">修改密码</span>
+                </a>
+            </li>
+            <li>
+                <a  href="{:U('Home/Login/logout')}">
+                    <i class="fa fa-home fa-fw "></i>
+                    <span class="menu-text">退出</span>
+                </a>
+            </li>
+        </ul>
+    </div>
+    <!-- /.sidebar-collapse -->
+</div>

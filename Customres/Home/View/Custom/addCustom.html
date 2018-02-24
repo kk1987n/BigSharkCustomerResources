@@ -1,0 +1,178 @@
+<extend name="Common:blackBase" />
+
+<block name="page_content">
+    <script type="text/javascript" src="__PUBLIC__/js/jquery.form.js"></script>
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            新增客户资源
+        </div>
+        <div class="panel-body">
+            <div class="panel-group" id="accordion">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="true" class="">
+                            <h4 class="panel-title">上传表格</h4>
+                        </a>
+                    </div>
+                    <div id="collapseOne" class="panel-collapse collapse" aria-expanded="true" style="">
+                        <div class="panel-body">
+                            <a class='btn btn-success pull-right' href='__URL__/getExcelTemp'>下载模板</a>
+                            <form name="uploadExcelData" method="post" action="__URL__/uploadExcelData" enctype="multipart/form-data">
+                                <input class='btn btn-success' id="fileupload" type="file" name="file[]" multiple>
+                                <div id="progresses">
+                                    <div class="progress progress-striped active" style="display: none;">
+                                        <div class="progress-bar progress-bar-danger" id="upProgress" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: 0%;">
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <a data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" class="collapsed" aria-expanded="false">
+                            <h4 class="panel-title">手动添加</h4>
+                        </a>
+                    </div>
+                    <div id="collapseTwo" class="panel-collapse collapse" aria-expanded="false" style="height: 0px;">
+                        <div class="panel-body">
+                            <form name="upload" method="post" action="__URL__/doAddCustom" enctype="multipart/form-data">
+                                <div class="form-group input-group">
+                                    <span class="input-group-addon">客户姓名</span>
+                                    <input type="text" class="form-control" name='name'>
+                                    <span class="input-group-addon">必填</span>
+                                </div>
+                                <div class="form-group input-group">
+                                    <span class="input-group-addon">手机号</span>
+                                    <input type="text" class="form-control" name='phone'>
+                                    <span class="input-group-addon">也可填固定电话</span>
+                                </div>
+                                <div class="form-group input-group">
+                                    <span class="input-group-addon">年龄</span>
+                                    <input type="text" class="form-control" name='age'>
+                                </div>
+                                <div class="form-group input-group">
+                                    <span class="input-group-addon">性别</span>
+                                    <select class="form-control" name='sex'>
+                                        <option value='1'>男</option>
+                                        <option value='0'>女</option>
+                                    </select>
+                                </div>
+                                <div class="form-group input-group">
+                                    <span class="input-group-addon">地址</span>
+                                    <input type="text" class="form-control" name='address'>
+                                    <span class="input-group-addon">省市区街道</span>
+                                </div>
+                                <div class="form-group input-group">
+                                    <span class="input-group-addon">座机</span>
+                                    <input type="text" class="form-control" name='zuoji'>
+                                </div>
+                                <div class="form-group input-group">
+                                    <span class="input-group-addon">关键词</span>
+                                    <input type="text" class="form-control" name='keyword'>
+                                    <span class="input-group-addon">性格/资源/家庭等</span>
+                                </div>
+                                <div class="form-group input-group">
+                                    <span class="input-group-addon">描述</span>
+                                    <input type="text" class="form-control" name='des'>
+                                    <span class="input-group-addon">一句话描述此客户</span>
+                                </div>
+                                <div class="form-group input-group">
+                                    <span class="input-group-addon">来源</span>
+                                    <input type="text" class="form-control" name='from'>
+                                    <span class="input-group-addon">百度/广告/推广/客户介绍等</span>
+                                </div>
+                                <div class="form-group input-group">
+                                    <span class="input-group-addon">微信号</span>
+                                    <input type="text" class="form-control" name='wx'>
+                                </div>
+                                <div class="form-group input-group">
+                                    <span class="input-group-addon">qq</span>
+                                    <input type="text" class="form-control" name='qq'>
+                                </div>
+                                <div class="form-group input-group">
+                                    <span class="input-group-addon">email</span>
+                                    <input type="text" class="form-control" name='email'>
+                                </div>
+                                <div class="form-group input-group">
+                                    <span class="input-group-addon">网站</span>
+                                    <input type="text" class="form-control" name='web'>
+                                    <span class="input-group-addon">用户个人网站</span>
+                                </div>
+                                <div class="form-group input-group">
+                                    <span class="input-group-addon">公司</span>
+                                    <input type="text" class="form-control" name='company'>
+                                    <span class="input-group-addon">所属公司名</span>
+                                </div>
+                                <div class="form-group input-group">
+                                    <span class="input-group-addon">公司类型</span>
+                                    <input type="text" class="form-control" name='comp_type'>
+                                    <span class="input-group-addon">广告/媒体/政府等</span>
+                                </div>
+                                <div class="form-group input-group">
+                                    <span class="input-group-addon">规模</span>
+                                    <input type="text" class="form-control" name='comp_scale'>
+                                    <span class="input-group-addon">公司有多少人</span>
+                                </div>
+                                <div class="form-group input-group">
+                                    <span class="input-group-addon">主营</span>
+                                    <input type="text" class="form-control" name='comp_skill'>
+                                    <span class="input-group-addon">广告/互联网/传统销售等</span>
+                                </div>
+                                <div class="form-group">
+                                    <label>额外重要信息</label>
+                                    <textarea class="form-control" rows="3" name='content'></textarea>
+                                </div>
+                                <div class="form-group">
+                                    <label>立即跟踪</label>
+                                    <label class="checkbox-inline">
+                                        <input type="checkbox" value='1' name='followNow'>是
+                                    </label>
+                                </div>
+                                <button type='submit' class="btn btn-success">提交</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</block>
+<block name="more_my_js">
+    <script>
+        $(function () {
+            $('#fileupload').change(function () {
+                $('form[name=uploadExcelData]').ajaxSubmit({
+                    resetForm: true,
+                    beforeSubmit: function () {
+                        $("#upProgress").parent().addClass('active');
+                        $("#upProgress").addClass('progress-bar-danger');
+                        $("#upProgress").removeClass('progress-bar-success');
+                        $("#upProgress").text('上传:0%');
+                        $('#fileupload').attr('disabled', true);
+                        $("#upProgress").parent().show();
+                    }, // 提交前的回调函数
+                    uploadProgress: function (event, position, total, percentComplete) {
+                        var percentVal = percentComplete + '%';
+                        $("#upProgress").css('width', percentVal);
+                        $("#upProgress").text('上传:' + percentVal);
+                        console.log(percentVal);
+                    },
+                    success: function (result) {
+                        console.log(result);
+                        if (result.status == 1) {
+                            $("#upProgress").text('完成');
+                            $("#upProgress").removeClass('progress-bar-danger');
+                            $("#upProgress").addClass('progress-bar-success');
+                        }
+                        $("#upProgress").parent().removeClass('active');
+                        $('#fileupload').attr('disabled', false);
+                        alert(result.msg);
+                    }
+                });
+            });
+
+        });
+    </script>
+</block>

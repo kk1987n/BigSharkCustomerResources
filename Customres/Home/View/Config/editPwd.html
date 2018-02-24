@@ -1,0 +1,25 @@
+<extend name="Common:blackBase" />
+
+<block name="page_content">
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            修改密码
+        </div>
+        <div class="panel-body">
+            <form action='__URL__/doEditPwd' method="post">
+                <div class="form-group input-group">
+                    <span class="input-group-addon">新密码</span>
+                    <input type="text" class="form-control" name='nPwd' value=''>
+                </div>
+                <button type="submit" class='btn btn-primary'>提交</button>
+            </form>
+        </div>
+    </div>
+</block>
+<block name="more_my_js">
+    <script>
+        $(function () {
+
+        });
+    </script>
+</block>

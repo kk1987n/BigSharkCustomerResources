@@ -1,2 +1,15 @@
-# BigSharkCustomerResources
-Customer Resources
+# 客户资源跟踪系统
+内部用的一个小系统,将手工的客户跟踪转变为在线的数据系统
+有很多不完善的地方,后续版本慢慢更新.
+
+# 第一步
+上传源码到服务器
+
+# 第二步
+导入Customres.sql到数据库
+
+# 第三步
+修改数据库连接(/Customres/Common/Conf/config.php)
+
+# 第四步
+访问,初始账号密码admin/123456
